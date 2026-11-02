@@ -16,6 +16,8 @@ def save(employee_id: str, data: dict) -> dict:
     item = {
         "PK": "USER",
         "SK": employee_id,
+        "GSI1PK": "USER_BY_DATE",
+        "GSI1SK": data["startDate"],
         "employeeId": employee_id,
         "name": data["name"],
         "department": data["department"],

@@ -18,7 +18,6 @@ def save(employee_id: str, start_date: str, data: dict) -> dict:
     table.put_item(Item=item)
     return item
 
-
 def list_for_employee(employee_id: str, month: str | None) -> list[dict]:
     condition = Key("PK").eq(employee_id)
     if month:
