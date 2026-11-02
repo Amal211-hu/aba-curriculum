@@ -39,3 +39,16 @@ def list_all() -> list[dict]:
 
 def delete(employee_id: str) -> None:
     table.delete_item(Key={"PK": "USER", "SK": employee_id})
+
+
+def list_by_hire_date(hired_from: str | None, hired_to: str | None) -> list[dict]:
+    condition = Key("GSI1PK").eq("USER_BY_DATE")
+    if hired_from and hired_to:
+        condition = condition & Key("GSI1SK").between(hired_from, hired_to)
+    elif hired_from:
+        condition = condition & Key("GSI1SK").gte(hired_from)
+    elif hired_to:
+        condition = condition & Key("GSI1SK").lte(hired_to)
+
+    response = table.query(IndexName="GSI1", KeyConditionExpression=condition)
+    return response["Items"]
